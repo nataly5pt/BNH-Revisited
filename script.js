@@ -1,112 +1,116 @@
-"use strict";
+// script.js
+'use strict';
 
-/* Bear • Ninja • Hunter — Functions 1 (Revisited) */
+// ----- DOM -----
+const buttons = document.querySelector('.buttons');
+const results  = document.getElementById('results');
+const score    = document.getElementById('score');
+const actions  = document.querySelector('.actions');
 
-// Data
-const CHOICES = ["Bear", "Ninja", "Hunter"];
-const BEATS = { Bear: "Ninja", Ninja: "Hunter", Hunter: "Bear" };
+const playerWinsEl   = document.getElementById('playerWins');
+const computerWinsEl = document.getElementById('computerWins');
 
+const playAgainBtn = document.getElementById('playAgain');
+const endSessionBtn = document.getElementById('endSession');
+
+// ----- Game State -----
 let playerWins = 0;
 let computerWins = 0;
-let resultsEl;
 
-// Init after DOM is ready
-document.addEventListener("DOMContentLoaded", () => {
-  resultsEl =
-    document.getElementById("results") ||
-    (() => {
-      const el = document.createElement("div");
-      el.id = "results";
-      el.setAttribute("aria-live", "polite");
-      document.body.appendChild(el);
-      return el;
-    })();
+const CHOICES = ['Bear', 'Ninja', 'Hunter'];
+const BEATS = {
+  Bear: 'Ninja',   // Bear beats Ninja
+  Ninja: 'Hunter', // Ninja beats Hunter
+  Hunter: 'Bear'   // Hunter beats Bear
+};
 
-  resultsEl.hidden = true;
+// ----- Utilities -----
+const randChoice = () => CHOICES[Math.floor(Math.random() * CHOICES.length)];
 
-  // Event delegation: works for the three choice buttons anywhere on the page,
-  // and for the action buttons we inject later.
-  document.addEventListener("click", (evt) => {
-    const choiceBtn = evt.target.closest("button[data-choice]");
-    if (choiceBtn) {
-      const choice = normalize(choiceBtn.dataset.choice);
-      if (CHOICES.includes(choice)) playRound(choice);
-      return;
-    }
-    if (evt.target.id === "playAgain") {
-      resetRoundUI();
-      return;
-    }
-    if (evt.target.id === "endSession") {
-      endSession();
-      return;
-    }
-  });
-});
-
-// Helpers
-function normalize(s = "") {
-  s = s.trim();
-  return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+function adjudicate(player, comp) {
+  if (player === comp) return 'tie';
+  return BEATS[player] === comp ? 'player' : 'computer';
 }
 
-function randomComputerChoice() {
-  return CHOICES[Math.floor(Math.random() * CHOICES.length)];
-}
-
-function decideWinner(player, computer) {
-  if (player === computer) return "tie";
-  return BEATS[player] === computer ? "player" : "computer";
-}
-
-// Round flow
-function playRound(playerChoice) {
-  const computerChoice = randomComputerChoice();
-  const winner = decideWinner(playerChoice, computerChoice);
-
-  if (winner === "player") playerWins++;
-  else if (winner === "computer") computerWins++;
-
-  renderResults(playerChoice, computerChoice, winner);
-}
-
-function renderResults(player, computer, winner) {
-  const outcomeText =
-    winner === "tie"
-      ? "It's a tie."
-      : winner === "player"
-      ? "You win this round."
-      : "Computer wins this round.";
-
-  resultsEl.className = "results";
-  resultsEl.innerHTML = `
+// ----- View helpers (yours) -----
+function renderRound(player, comp, outcomeText, outcomeClass) {
+  results.innerHTML = `
     <p><strong>You chose:</strong> ${player}</p>
-    <p><strong>Computer chose:</strong> ${computer}</p>
-    <p class="outcome">${outcomeText}</p>
-
-    <div id="score" class="counters">
-      <span>Player Wins: <span id="pWins">${playerWins}</span></span>
-      <span class="sep">|</span>
-      <span>Computer Wins: <span id="cWins">${computerWins}</span></span>
-    </div>
-
-    <div class="actions">
-      <button id="playAgain" type="button">Play Again</button>
-      <button id="endSession" type="button">End Session</button>
-    </div>
+    <p><strong>Computer chose:</strong> ${comp}</p>
+    <p class="outcome ${outcomeClass}">${outcomeText}</p>
   `;
-  resultsEl.hidden = false;
+  results.hidden = false;
+
+  playerWinsEl.textContent   = playerWins;
+  computerWinsEl.textContent = computerWins;
+  score.hidden = false;
+
+  actions.hidden = false;           // show the one global actions row
+  document.getElementById('playAgain').focus();
 }
 
-function resetRoundUI() {
-  resultsEl.hidden = true;
-  resultsEl.innerHTML = "";
+// Return to initial display (rules + buttons only)
+function resetToInitial() {
+  results.hidden = true;
+  score.hidden   = true;            // win counter only after a single game
+  // focus the first choice button for quick replay
+  const firstBtn = document.querySelector('.buttons button');
+  if (firstBtn) firstBtn.focus();
 }
 
-function endSession() {
+// Fully clear a session (when End Session is clicked)
+function clearSession() {
   playerWins = 0;
   computerWins = 0;
-  resetRoundUI();
+  playerWinsEl.textContent = '0';
+  computerWinsEl.textContent = '0';
+  resetToInitial();
 }
+
+// ----- Event Handlers -----
+function onChoiceClick(e) {
+  const btn = e.target.closest('button[data-choice]');
+  if (!btn) return;
+
+  const player = btn.dataset.choice;     // "Bear" | "Ninja" | "Hunter"
+  const comp   = randChoice();
+  const outcome = adjudicate(player, comp);
+
+  let text, klass;
+
+  if (outcome === 'tie') {
+    text  = "It's a tie.";
+    klass = 'tie';
+  } else if (outcome === 'player') {
+    playerWins++;
+    text  = 'You win this round.';
+    klass = 'win';
+  } else {
+    computerWins++;
+    text  = 'Computer wins this round.';
+    klass = 'lose';
+  }
+
+  // Update the UI for this single round
+  renderRound(player, comp, text, klass);
+}
+
+function onPlayAgain() {
+  resetToInitial();
+}
+
+function onEndSession() {
+  clearSession();
+  alert('Session cleared. Scores reset to 0. Pick a choice to start a new session.');
+}
+
+// ----- Wire up listeners -----
+buttons.addEventListener('click', onChoiceClick);
+playAgainBtn.addEventListener('click', onPlayAgain);
+endSessionBtn.addEventListener('click', onEndSession);
+
+// Start on the initial view
+resetToInitial();
+
 
 
