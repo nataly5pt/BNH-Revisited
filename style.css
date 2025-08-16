@@ -1,0 +1,104 @@
+:root{
+  --bg: #0f1115;
+  --card: #1a1f29;
+  --ink: #e9eef7;
+  --muted: #a9b3c7;
+  --accent: #5fb0ff;
+  --accent-2: #ffd36b;
+  --border: #2a3242;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+}
+
+.wrap {
+  width: min(900px, 92vw);
+  text-align: center;
+  padding: 32px 16px 40px;
+}
+
+h2 {
+  font-weight: 800;
+  letter-spacing: 0.4px;
+  margin: 0 0 18px;
+}
+
+.panel { margin-top: 12px; }
+.hidden { display: none; }
+
+.rules {
+  display: grid;
+  place-items: center;
+  margin: 8px 0 10px;
+}
+.rules ul{
+  margin: 0;
+  padding-left: 18px;     /* left-justified bullet list */
+  text-align: left;       /* left align inside centered block */
+  line-height: 1.4;
+  max-width: 440px;
+  color: var(--muted);
+}
+
+.divider{
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 18px auto;
+  width: clamp(340px, 65%, 640px); /* ~50% wider than buttons row; adjust if needed */
+}
+
+.btn-row{
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+button{
+  appearance: none;
+  border: 1px solid var(--border);
+  background: #222a37;
+  color: var(--ink);
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform .04s ease, background .2s ease, border-color .2s;
+}
+button:hover{ background: #273043; border-color: #323b4f; }
+button:active{ transform: translateY(1px); }
+button.secondary{ background: #1f232c; color: var(--muted); }
+
+.hint{ margin-top: 6px; color: var(--muted); }
+
+.results-box{
+  margin: 18px auto 12px;
+  background: #141a23;            /* subtly different from page bg */
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px 10px;
+  width: clamp(340px, 70%, 680px);
+  text-align: left;               /* left-justified but the box is centered */
+}
+.results-box .line{ margin: 6px 0; }
+
+.outcome{
+  margin: 10px 0 2px;
+  font-size: 1.25rem;             /* larger, bold */
+  font-weight: 800;
+  color: var(--accent-2);
+}
+
+.wins{
+  margin: 8px 0 16px;
+  color: var(--accent);
+  font-weight: 600;
+}
