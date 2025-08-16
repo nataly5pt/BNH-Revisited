@@ -33,21 +33,21 @@
 
     <p class="hint">Pick one to play a single game.</p>
 
-    <!-- Results (hidden until a round is played) -->
-    <div id="results" class="results" aria-live="polite" hidden></div>
+   <!-- Results pane (hidden until a round is played) -->
+<div id="results" class="results" aria-live="polite" hidden></div>
 
-    <!-- Win counters (hidden until a round is played) -->
-    <div id="score" class="counters" hidden>
-      <span>Player Wins: <span id="playerWins">0</span></span>
-      <span class="sep">|</span>
-      <span>Computer Wins: <span id="computerWins">0</span></span>
-    </div>
+<!-- Win counters (hidden until a round is played) -->
+<div id="score" class="counters" hidden>
+  <span>Player Wins: <span id="playerWins">0</span></span>
+  <span class="sep">|</span>
+  <span>Computer Wins: <span id="computerWins">0</span></span>
+</div>
 
-    <!-- Actions (hidden until a round is played) -->
-    <div class="actions" id="actions" hidden>
-      <button type="button" id="playAgain">Play Again</button>
-      <button type="button" id="endSession">End Session</button>
-    </div>
+<!-- ONE global actions row -->
+<div id="actions" class="actions" hidden>
+  <button type="button" id="playAgain">Play Again</button>
+  <button type="button" id="endSession">End Session</button>
+</div>
   </main>
 
   <!-- Load JS after HTML so listeners attach correctly -->
