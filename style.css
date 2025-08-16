@@ -1,104 +1,125 @@
+/* ---------- Base ---------- */
 :root{
-  --bg: #0f1115;
-  --card: #1a1f29;
-  --ink: #e9eef7;
-  --muted: #a9b3c7;
-  --accent: #5fb0ff;
-  --accent-2: #ffd36b;
-  --border: #2a3242;
+  --bg:#0f141a;
+  --panel:#121a22;
+  --text:#d9e1ea;
+  --muted:#9fb3c8;
+  --accent:#e8b541;
+  --border:#253141;
+  --btn:#1e2a38;
+  --btn-hover:#263649;
 }
 
-* { box-sizing: border-box; }
-html, body { height: 100%; }
-body {
-  margin: 0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  display: grid;
-  place-items: center;
+*{ box-sizing:border-box; }
+
+html,body{
+  height:100%;
 }
 
-.wrap {
-  width: min(900px, 92vw);
-  text-align: center;
-  padding: 32px 16px 40px;
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+  color:var(--text);
+  background:var(--bg);
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
 }
 
-h2 {
-  font-weight: 800;
-  letter-spacing: 0.4px;
-  margin: 0 0 18px;
+main{
+  width:min(900px, 92%);
+  margin:4rem auto 6rem;
+  text-align:center;           /* center all page content */
 }
 
-.panel { margin-top: 12px; }
-.hidden { display: none; }
-
-.rules {
-  display: grid;
-  place-items: center;
-  margin: 8px 0 10px;
+h2{
+  margin:0 0 1rem;
+  font-size:2rem;
+  letter-spacing:.02em;
 }
+
+/* ---------- YOUR REQUESTED RULES ---------- */
+.rules { width: min(700px, 90%); margin: 1rem auto; }
+.rules ul { text-align: left; margin: 0 auto; }
+hr.rule { width: clamp(360px, 60%, 700px); margin: 1rem auto; }
+#results[hidden], #score[hidden] { display:none; }
+/* ----------------------------------------- */
+
+/* list looks nice but stays left-justified */
 .rules ul{
-  margin: 0;
-  padding-left: 18px;     /* left-justified bullet list */
-  text-align: left;       /* left align inside centered block */
-  line-height: 1.4;
-  max-width: 440px;
-  color: var(--muted);
+  line-height:1.6;
+  padding-left:1.1rem;
 }
+.rules li{ color:var(--muted); }
 
-.divider{
-  border: 0;
-  border-top: 1px solid var(--border);
-  margin: 18px auto;
-  width: clamp(340px, 65%, 640px); /* ~50% wider than buttons row; adjust if needed */
-}
-
-.btn-row{
-  display: inline-flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: center;
+/* ---------- Buttons row ---------- */
+.buttons{
+  display:flex;
+  gap:.75rem;
+  justify-content:center;
+  margin:1rem 0 1.25rem;
 }
 
 button{
-  appearance: none;
-  border: 1px solid var(--border);
-  background: #222a37;
-  color: var(--ink);
-  font-weight: 600;
-  padding: 10px 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform .04s ease, background .2s ease, border-color .2s;
+  appearance:none;
+  border:1px solid var(--border);
+  background:var(--btn);
+  color:var(--text);
+  padding:.6rem 1rem;
+  border-radius:.6rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:transform .05s ease, background .15s ease, border-color .15s ease;
 }
-button:hover{ background: #273043; border-color: #323b4f; }
-button:active{ transform: translateY(1px); }
-button.secondary{ background: #1f232c; color: var(--muted); }
+button:hover{ background:var(--btn-hover); border-color:#2e4158; }
+button:active{ transform:translateY(1px); }
 
-.hint{ margin-top: 6px; color: var(--muted); }
-
-.results-box{
-  margin: 18px auto 12px;
-  background: #141a23;            /* subtly different from page bg */
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px 16px 10px;
-  width: clamp(340px, 70%, 680px);
-  text-align: left;               /* left-justified but the box is centered */
-}
-.results-box .line{ margin: 6px 0; }
-
-.outcome{
-  margin: 10px 0 2px;
-  font-size: 1.25rem;             /* larger, bold */
-  font-weight: 800;
-  color: var(--accent-2);
+/* secondary actions */
+.actions{
+  display:flex;
+  gap:.75rem;
+  justify-content:center;
+  margin-top:1rem;
 }
 
-.wins{
-  margin: 8px 0 16px;
-  color: var(--accent);
-  font-weight: 600;
+/* ---------- Results panel ---------- */
+.results{
+  width:min(720px, 92%);
+  margin:1.25rem auto 0;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:.8rem;
+  padding:1rem 1.25rem;
+  text-align:left;                 /* left-justified text inside centered box */
+  box-shadow:0 6px 18px rgba(0,0,0,.25);
+}
+
+.results p{ margin:.35rem 0; color:var(--muted); }
+.results .outcome{
+  margin-top:.5rem;
+  font-size:1.15rem;
+  font-weight:800;
+  color:var(--accent);
+}
+
+/* ---------- Counters ---------- */
+.counters{
+  margin:.9rem auto 0;
+  display:flex;
+  justify-content:center;
+  gap:.5rem;
+  color:var(--muted);
+  font-weight:700;
+}
+.counters .sep{ opacity:.45; }
+
+/* Optional: if your markup uses #counters instead of #score, hide when [hidden] */
+#counters[hidden]{ display:none; }
+
+/* ---------- Utility ---------- */
+hr.rule{
+  border:0;
+  height:1px;
+  background:linear-gradient(90deg, transparent, var(--border), transparent);
+  opacity:.9;
 }
