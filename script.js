@@ -33,6 +33,8 @@ function adjudicate(player, comp) {
 }
 
 // ----- View helpers (yours) -----
+const actions = document.getElementById('actions'); // not querySelector('.actions')
+
 function renderRound(player, comp, outcomeText, outcomeClass) {
   results.innerHTML = `
     <p><strong>You chose:</strong> ${player}</p>
@@ -45,7 +47,7 @@ function renderRound(player, comp, outcomeText, outcomeClass) {
   computerWinsEl.textContent = computerWins;
   score.hidden = false;
 
-  actions.hidden = false;           // show the one global actions row
+  actions.hidden = false; // shows the ONE actions row
   document.getElementById('playAgain').focus();
 }
 
