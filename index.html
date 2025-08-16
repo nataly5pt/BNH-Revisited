@@ -3,52 +3,56 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bear, Ninja, Hunter</title>
+  <title>Bear • Ninja • Hunter</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <main>
-  <h2>Bear • Ninja • Hunter</h2>
+    <h2>Bear • Ninja • Hunter</h2>
 
-  <section class="rules">
-    <ul>
-      <li>Bear beats Ninja</li>
-      <li>Ninja beats Hunter</li>
-      <li>Hunter beats Bear</li>
-      <li>Same choice = tie</li>
-    </ul>
-  </section>
+    <!-- Winning rules -->
+    <section class="rules">
+      <ul>
+        <li>Bear beats Ninja</li>
+        <li>Ninja beats Hunter</li>
+        <li>Hunter beats Bear</li>
+        <li>Same choice = tie</li>
+      </ul>
+    </section>
 
-  <hr class="rule" />
+    <hr class="rule" />
 
-  <div class="buttons">
-    <button type="button" data-choice="Bear">Bear</button>
-    <button type="button" data-choice="Ninja">Ninja</button>
-    <button type="button" data-choice="Hunter">Hunter</button>
-  </div>
+    <!-- Choice buttons (one round) -->
+    <div class="buttons">
+      <button type="button" data-choice="Bear">Bear</button>
+      <button type="button" data-choice="Ninja">Ninja</button>
+      <button type="button" data-choice="Hunter">Hunter</button>
+    </div>
 
-  <hr class="rule" />
+    <hr class="rule" />
 
-  <p>Pick one to play a single game.</p>
+    <p class="hint">Pick one to play a single game.</p>
 
-  <!-- Results pane (hidden until a round is played) -->
-  <div id="results" class="results" aria-live="polite" hidden></div>
+    <!-- Results (hidden until a round is played) -->
+    <div id="results" class="results" aria-live="polite" hidden></div>
 
-  <!-- Win counters (hidden until a round is played) -->
-  <div id="score" class="counters" hidden>
-    <span>Player Wins: <span id="playerWins">0</span></span>
-    <span class="sep">|</span>
-    <span>Computer Wins: <span id="computerWins">0</span></span>
-  </div>
+    <!-- Win counters (hidden until a round is played) -->
+    <div id="score" class="counters" hidden>
+      <span>Player Wins: <span id="playerWins">0</span></span>
+      <span class="sep">|</span>
+      <span>Computer Wins: <span id="computerWins">0</span></span>
+    </div>
 
-  <div class="actions">
-    <button type="button" id="playAgain">Play Again</button>
-    <button type="button" id="endSession">End Session</button>
-  </div>
-</main>
+    <!-- Actions (hidden until a round is played) -->
+    <div class="actions" id="actions" hidden>
+      <button type="button" id="playAgain">Play Again</button>
+      <button type="button" id="endSession">End Session</button>
+    </div>
+  </main>
 
-<!-- IMPORTANT: load JS with defer so listeners attach after DOM exists -->
-<script src="script.js" defer></script>
+  <!-- Load JS after HTML so listeners attach correctly -->
+  <script src="script.js" defer></script>
 </body>
 </html>
+
 
