@@ -1,46 +1,57 @@
 "use strict";
 
-/* ---------------------------------------------
-   Bear • Ninja • Hunter — Functions 1 (Revisited)
-   --------------------------------------------- */
+/* Bear • Ninja • Hunter — Functions 1 (Revisited) */
 
-// Game data
+// Data
 const CHOICES = ["Bear", "Ninja", "Hunter"];
-const BEATS = {
-  Bear: "Ninja",
-  Ninja: "Hunter",
-  Hunter: "Bear",
-};
+const BEATS = { Bear: "Ninja", Ninja: "Hunter", Hunter: "Bear" };
 
-// State that persists through a session
 let playerWins = 0;
 let computerWins = 0;
+let resultsEl;
 
-// DOM
-const resultsEl =
-  document.getElementById("results") ||
-  (() => {
-    const el = document.createElement("div");
-    el.id = "results";
-    el.setAttribute("aria-live", "polite");
-    document.body.appendChild(el);
-    return el;
-  })();
+// Init after DOM is ready
+document.addEventListener("DOMContentLoaded", () => {
+  resultsEl =
+    document.getElementById("results") ||
+    (() => {
+      const el = document.createElement("div");
+      el.id = "results";
+      el.setAttribute("aria-live", "polite");
+      document.body.appendChild(el);
+      return el;
+    })();
 
-resultsEl.hidden = true;
+  resultsEl.hidden = true;
 
-// Attach click handlers to the three choice buttons
-// (We read the button text as the choice if data-choice is not set.)
-const choiceButtons = document.querySelectorAll(".buttons button");
-choiceButtons.forEach((btn) => {
-  if (!btn.dataset.choice) btn.dataset.choice = btn.textContent.trim();
-  btn.addEventListener("click", () => playRound(btn.dataset.choice));
+  // Event delegation: works for the three choice buttons anywhere on the page,
+  // and for the action buttons we inject later.
+  document.addEventListener("click", (evt) => {
+    const choiceBtn = evt.target.closest("button[data-choice]");
+    if (choiceBtn) {
+      const choice = normalize(choiceBtn.dataset.choice);
+      if (CHOICES.includes(choice)) playRound(choice);
+      return;
+    }
+    if (evt.target.id === "playAgain") {
+      resetRoundUI();
+      return;
+    }
+    if (evt.target.id === "endSession") {
+      endSession();
+      return;
+    }
+  });
 });
 
-// --- Helpers ---
+// Helpers
+function normalize(s = "") {
+  s = s.trim();
+  return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+}
+
 function randomComputerChoice() {
-  const idx = Math.floor(Math.random() * CHOICES.length);
-  return CHOICES[idx];
+  return CHOICES[Math.floor(Math.random() * CHOICES.length)];
 }
 
 function decideWinner(player, computer) {
@@ -48,7 +59,7 @@ function decideWinner(player, computer) {
   return BEATS[player] === computer ? "player" : "computer";
 }
 
-// --- Round flow ---
+// Round flow
 function playRound(playerChoice) {
   const computerChoice = randomComputerChoice();
   const winner = decideWinner(playerChoice, computerChoice);
@@ -85,23 +96,17 @@ function renderResults(player, computer, winner) {
     </div>
   `;
   resultsEl.hidden = false;
-
-  // Wire action buttons
-  document.getElementById("playAgain").addEventListener("click", resetRoundUI);
-  document.getElementById("endSession").addEventListener("click", endSession);
 }
 
-// Hide results, keep totals (for another single game)
 function resetRoundUI() {
   resultsEl.hidden = true;
   resultsEl.innerHTML = "";
-  // Initial page display (rules + buttons) remains visible in your HTML.
 }
 
-// Clear totals and return to the initial display
 function endSession() {
   playerWins = 0;
   computerWins = 0;
   resetRoundUI();
 }
+
 
