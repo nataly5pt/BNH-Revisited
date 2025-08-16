@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bear • Ninja • Hunter — Revisited</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <h2>Bear • Ninja • Hunter</h2>
+
+    <!-- INITIAL VIEW -->
+    <section id="initial" class="panel">
+      <div class="rules">
+        <ul>
+          <li>Bear defeats Ninja</li>
+          <li>Ninja defeats Hunter</li>
+          <li>Hunter defeats Bear</li>
+        </ul>
+      </div>
+
+      <hr class="divider" aria-hidden="true" />
+      <div class="btn-row" role="group" aria-label="Choose your fighter">
+        <button class="choice" data-choice="Bear">Bear</button>
+        <button class="choice" data-choice="Ninja">Ninja</button>
+        <button class="choice" data-choice="Hunter">Hunter</button>
+      </div>
+      <hr class="divider" aria-hidden="true" />
+
+      <p class="hint">Pick one to play a single game.</p>
+    </section>
+
+    <!-- RESULT VIEW (shown after each single game) -->
+    <section id="result" class="panel hidden" aria-live="polite">
+      <div class="results-box">
+        <p class="line"><strong>You chose:</strong> <span id="youChoice">—</span></p>
+        <p class="line"><strong>Computer chose:</strong> <span id="cpuChoice">—</span></p>
+        <p id="outcome" class="outcome">—</p>
+      </div>
+
+      <div class="wins">
+        <p><strong>Player Wins:</strong> <span id="youWins">0</span> &nbsp;|&nbsp;
+           <strong>Computer Wins:</strong> <span id="cpuWins">0</span></p>
+      </div>
+
+      <div class="btn-row">
+        <button id="playAgain">Play Again</button>
+        <button id="endSession" class="secondary">End Session</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
